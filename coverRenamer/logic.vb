@@ -1,40 +1,13 @@
-﻿Public Class Form1
+﻿
+Public Class logicWrapper
 
 
-
-    Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        rompath.Text = "H:\snes9xgx\roms"
-        originalcoverpath.Text = "D:\#temp\Wii\covers\SNES Vert Shrunken Spine (753)\SNES Vert Shrunken Spine (753)\all"
-        renamedcoverpath.Text = "D:\#temp\Wii\covers\wiiflow renamed\vert"
-    End Sub
-
-
-
-    Private Sub btnSearchRom_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearchRom.Click
-        FolderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer
-        FolderBrowserDialog1.SelectedPath = rompath.Text
-        FolderBrowserDialog1.ShowDialog()
-        rompath.Text = FolderBrowserDialog1.SelectedPath
-    End Sub
-    Private Sub btnSearchCovers_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearchCovers.Click
-        FolderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer
-        FolderBrowserDialog1.SelectedPath = originalcoverpath.Text
-        FolderBrowserDialog1.ShowDialog()
-        originalcoverpath.Text = FolderBrowserDialog1.SelectedPath
-    End Sub
-    Private Sub btnSearchRenamed_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSearchRenamed.Click
-        FolderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer
-        FolderBrowserDialog1.SelectedPath = renamedcoverpath.Text
-        FolderBrowserDialog1.ShowDialog()
-        renamedcoverpath.Text = FolderBrowserDialog1.SelectedPath
-    End Sub
-    Private Sub btnAnalize_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAnalize.Click
-        analize()
-    End Sub
-
-
-
-    Private Sub analize()
+    ''' <summary>
+    ''' This functions scan the rom path and proceds to analize the cover path looking for matches
+    ''' The matches are then presented to the user on the datagridview
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Function analize(ByVal rompath As String, ByVal originalcoverpath As String) As DataTable
         Dim dt As New DataTable
 
         dt.Columns.Add("rom", GetType(String))
@@ -92,10 +65,10 @@
         dtCovers.Columns.Add("index", GetType(Integer))
 
         'scan rom path to get all romnames
-        For Each file As String In My.Computer.FileSystem.GetFiles(rompath.Text)
+        For Each file As String In My.Computer.FileSystem.GetFiles(rompath)
             Dim newLine As DataRow = dt.NewRow
             With newLine
-                .Item("rom") = file.Replace(rompath.Text, "").Replace("\", "")
+                .Item("rom") = file.Replace(rompath, "").Replace("\", "")
                 .Item("game") = Trim(.Item("rom"))
                 .Item("game") = Mid(.Item("game"), 1, .Item("game").ToString.LastIndexOf(".")) 'remove the extension
 
@@ -127,10 +100,10 @@
 
 
         'then, scan the cover path, and generate a list with all covers
-        For Each file As String In My.Computer.FileSystem.GetFiles(originalcoverpath.Text)
+        For Each file As String In My.Computer.FileSystem.GetFiles(originalcoverpath)
             Dim newLine As DataRow = dtCovers.NewRow
             With newLine
-                .Item("cover") = file.Replace(originalcoverpath.Text, "").Replace("\", "")
+                .Item("cover") = file.Replace(originalcoverpath, "").Replace("\", "")
                 .Item("game") = Trim(.Item("cover"))
                 .Item("game") = Mid(.Item("game"), 1, .Item("game").ToString.LastIndexOf(".")) 'remove the extension
 
@@ -176,11 +149,19 @@
         Next
 
 
-        dg.AutoGenerateColumns = False
-        dg.DataSource = dt
+        Return dt
 
-    End Sub
-    Private Function locateCover(ByVal indexDT As Integer, _
+    End Function
+
+    ''' <summary>
+    ''' Here is the main algorithm used to search for covers for each game
+    ''' </summary>
+    ''' <param name="indexDT"></param>
+    ''' <param name="dtRoms"></param>
+    ''' <param name="tableCovers"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function locateCover(ByVal indexDT As Integer, _
                                  ByVal dtRoms As DataTable, _
                                  ByVal tableCovers As DataTable)
         Dim coverFile As String = ""
@@ -246,37 +227,55 @@
 
         Return coverFile
     End Function
-    Private Function parse(ByVal str As String) As String
+
+    ''' <summary>
+    ''' A simple parsing function used to remove characters we want to avoid on the words we compare 
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function parse(ByVal str As String) As String
         Return str.Replace("'", "")
     End Function
 
+    ''' <summary>
+    ''' This sub execute the copy/renaming operation
+    ''' </summary>
+    ''' <param name="sourcePath"></param>
+    ''' <param name="destinationPath"></param>
+    ''' <param name="ranameData"></param>
+    ''' <remarks></remarks>
+    Public Sub renameCovers(ByVal sourcePath As String, _
+                                  ByVal destinationPath As String, _
+                                  ByVal ranameData As DataRow())
 
-    Private Sub btnExecute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExecute.Click
-
-        For Each dr As DataRow In CType(dg.DataSource, DataTable).Select(" match='S'", "")
+        For Each romAndCover As DataRow In ranameData
 
             Dim sourceFile, destinationFile, coverExtension As String
 
-            sourceFile = originalcoverpath.Text
+            sourceFile = sourcePath
             If Not Mid(sourceFile, sourceFile.Length, 1) = "/" Then
                 sourceFile &= "\"
             End If
-            sourceFile &= dr.Item("cover")
+            sourceFile &= romAndCover.Item("cover")
 
             coverExtension = Mid(sourceFile, sourceFile.ToString.LastIndexOf(".") + 1) 'remove the extension
 
-            destinationFile = renamedcoverpath.Text
+            destinationFile = destinationPath
             If Not Mid(destinationFile, destinationFile.Length, 1) = "/" Then
                 destinationFile &= "\"
             End If
-            destinationFile &= dr.Item("rom") & coverExtension
+            destinationFile &= romAndCover.Item("rom") & coverExtension
 
 
             My.Computer.FileSystem.CopyFile(sourceFile, destinationFile)
 
 
         Next
-
-
     End Sub
+
 End Class
+
+
+
+

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+coverRenamer
+</name>
+</assembly>
+<members>
+<member name="M:coverRenamer.logicWrapper.analize(System.String,System.String)">
+	<summary>
+ This functions scan the rom path and proceds to analize the cover path looking for matches
+ The matches are then presented to the user on the datagridview
+ </summary>
+	<remarks></remarks>
+</member><member name="M:coverRenamer.logicWrapper.locateCover(System.Int32,System.Data.DataTable,System.Data.DataTable)">
+	<summary>
+ Here is the main algorithm used to search for covers for each game
+ </summary>
+	<param name="indexDT"></param>
+	<param name="dtRoms"></param>
+	<param name="tableCovers"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:coverRenamer.logicWrapper.parse(System.String)">
+	<summary>
+ A simple parsing function used to remove characters we want to avoid on the words we compare 
+ </summary>
+	<param name="str"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:coverRenamer.logicWrapper.renameCovers(System.String,System.String,System.Data.DataRow[])">
+	<summary>
+ This sub execute the copy/renaming operation
+ </summary>
+	<param name="sourcePath"></param>
+	<param name="destinationPath"></param>
+	<param name="ranameData"></param>
+	<remarks></remarks>
+</member><member name="P:coverRenamer.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:coverRenamer.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:coverRenamer.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

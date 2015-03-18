@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "coverRenamer", "WindowsApplication1\coverRenamer.vbproj", "{959B8232-AE9C-4E9B-96AB-6B41F66C1D1C}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "coverRenamer", "coverRenamer\coverRenamer.vbproj", "{959B8232-AE9C-4E9B-96AB-6B41F66C1D1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

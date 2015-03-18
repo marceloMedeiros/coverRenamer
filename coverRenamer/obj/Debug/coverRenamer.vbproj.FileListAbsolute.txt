@@ -1,0 +1,13 @@
+C:\Users\Marcelo\Documents\Visual Studio 2008\Projects\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.exe
+C:\Users\Marcelo\Documents\Visual Studio 2008\Projects\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.xml
+C:\Users\Marcelo\Documents\Visual Studio 2008\Projects\WindowsApplication1\WindowsApplication1\obj\Debug\WindowsApplication1.pdb
+D:\devel\GitHub\coverRenamer\coverRenamer\bin\Debug\coverRenamer.exe
+D:\devel\GitHub\coverRenamer\coverRenamer\bin\Debug\coverRenamer.pdb
+D:\devel\GitHub\coverRenamer\coverRenamer\bin\Debug\coverRenamer.xml
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\ResolveAssemblyReference.cache
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.main.resources
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.Resources.resources
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.vbproj.GenerateResource.Cache
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.exe
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.xml
+D:\devel\GitHub\coverRenamer\coverRenamer\obj\Debug\coverRenamer.pdb
